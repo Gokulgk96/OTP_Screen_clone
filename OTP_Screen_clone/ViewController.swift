@@ -51,6 +51,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                
                if textField == textView4 {
                    textView4.resignFirstResponder()
+                   
+                   setAlert(StringText: (textView1.text ?? "0") + (textView2.text ?? "0") + (textView3.text ?? "0") + string)
                }
                
                textField.text = string
@@ -73,10 +75,43 @@ class ViewController: UIViewController, UITextFieldDelegate {
                return false
            } else if (textField.text?.count)! >= 1 {
                textField.text = string
+               if textField == textView2 {
+                   textView3.becomeFirstResponder()
+               }
+               if textField == textView3 {
+                   textView4.becomeFirstResponder()
+               }
+               if textField == textView4 {
+                   textView4.resignFirstResponder()
+                   setAlert(StringText: (textView1.text ?? "0") + (textView2.text ?? "0") + (textView3.text ?? "0") + string)
+               }
+               if textField == textView1 {
+                   textView2.becomeFirstResponder()
+               }
                return false
            }
-           
            return true
        }
+    
+    func setAlert(StringText: String) {
+       
+        if StringText == "1234" {
+            let alert = UIAlertController(title: "Congrats", message: "secret message found", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Click to close", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Alert", message: "Try Again", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Click to Try again", style: UIAlertAction.Style.default, handler: {_ in
+                self.textView1.text = ""
+                self.textView2.text = ""
+                self.textView3.text = ""
+                self.textView4.text = ""
+                self.textView1.becomeFirstResponder()
+                
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
 }
 
